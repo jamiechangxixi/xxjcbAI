@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息集成部文件规范AI助手</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标库 -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 引入CozeWebSDK -->
+    <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.10/libs/cn/index.js"></script>
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36BFFA',
+                        neutral: '#64748B',
+                        dark: '#1E293B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(22, 93, 255, 0.1), 0 8px 10px -6px rgba(22, 93, 255, 0.1);
+            }
+            .floating-button {
+                transition: all 0.3s ease;
+            }
+            .floating-button:hover {
+                transform: scale(1.1);
+                box-shadow: 0 10px 25px -5px rgba(22, 93, 255, 0.3), 0 8px 10px -6px rgba(22, 93, 255, 0.2);
+            }
+            
+            /* 美化页面元素 */
+            .feature-card {
+                transition: all 0.3s ease;
+                border-left: 4px solid #165DFF;
+            }
+            
+            .feature-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #165DFF;
+            }
+            
+            .hero-pattern {
+                background-color: #f8fafc;
+                background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23165dff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            }
+            
+            .ai-logo {
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                object-fit: contain;
+                box-shadow: 0 8px 25px rgba(22, 93, 255, 0.15);
+                transition: all 0.3s ease;
+            }
+            
+            .ai-logo:hover {
+                transform: scale(1.05);
+                box-shadow: 0 12px 30px rgba(22, 93, 255, 0.2);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- 顶部导航栏 -->
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-file-text-o text-primary text-xl"></i>
+                <span class="text-dark font-medium">信息集成部</span>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="text-neutral hover:text-primary transition-colors">首页</a></li>
+                    <li><a href="#" class="text-neutral hover:text-primary transition-colors">使用指南</a></li>
+                    <li><a href="#" class="text-neutral hover:text-primary transition-colors">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="flex-grow">
+        <!-- 英雄区域 -->
+        <section class="hero-pattern py-16">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold text-dark mb-6">
+                        信息集成部文件规范AI助手
+                    </h1>
+                    
+                    <p class="text-neutral text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                        智能辅助文件规范化查询，提升工作效率与准确性
+                    </p>
+                    
+                    <!-- 大图标 - 已替换为指定图片 -->
+                    <div class="mb-10 flex justify-center">
+                        <img src="https://i.postimg.cc/VvHfrX4d/AI-LOGO.png" alt="AI助手图标" class="ai-logo">
+                    </div>
+                    
+                    <!-- 新增提示文字 -->
+                    <p class="text-neutral text-base md:text-lg mb-6">
+                        点击右下角图标即可打开AI对话框
+                    </p>
+                    
+                    <!-- 功能亮点 -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                        <div class="feature-card bg-white p-6 rounded-lg shadow-sm">
+                            <div class="text-primary text-2xl mb-4">
+                                <i class="fa fa-lightbulb-o"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">智能解答</h3>
+                            <p class="text-neutral">快速获取文件规范相关问题解答，提高工作效率</p>
+                        </div>
+                        
+                        <div class="feature-card bg-white p-6 rounded-lg shadow-sm">
+                            <div class="text-primary text-2xl mb-4">
+                                <i class="fa fa-file-text-o"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">规范查询</h3>
+                            <p class="text-neutral">快速查询各类文件规范标准，确保文档符合要求</p>
+                        </div>
+                        
+                        <div class="feature-card bg-white p-6 rounded-lg shadow-sm">
+                            <div class="text-primary text-2xl mb-4">
+                                <i class="fa fa-clock-o"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">24/7支持</h3>
+                            <p class="text-neutral">全天候AI助手支持，随时解决您的文档问题</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- 使用指南 -->
+        <section class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-dark mb-12">如何使用AI助手</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-primary text-xl font-bold">1</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">点击悬浮按钮</h3>
+                        <p class="text-neutral">点击页面右下角的AI助手图标打开聊天窗口</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-primary text-xl font-bold">2</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">输入您的问题</h3>
+                        <p class="text-neutral">输入关于文件规范的任何问题或需求</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-primary text-xl font-bold">3</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">获取专业解答</h3>
+                        <p class="text-neutral">AI助手将为您提供准确、专业的解答和指导</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">信息集成部</h3>
+                    <p class="text-gray-400">致力于提供高效、规范的文档管理解决方案</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">使用指南</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">常见问题</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">联系我们</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>电话: 025-83757170</li>
+                        <li>地址: 南京市北京西路75号江苏省基础地理信息中心</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+                <p>© 2025 信息集成部文件规范AI助手 | 内部系统 V1.0</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Coze AI 聊天机器人 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new CozeWebSDK.WebChatClient({
+                config: {
+                    type: 'bot',
+                    bot_id: '7542354708036845620',
+                    isIframe: false,
+                },
+                auth: {
+                    type: 'token',
+                    token: 'pat_uEpnxsAFcVHnGcVIUsqTpq0EN6f0iAASMi3quNTFtwbN51fs2Ei404omCmsOflVC',
+                    onRefreshToken: async () => 'token'
+                },
+                userInfo: {
+                    id: 'user',
+                    url: 'https://t9.baidu.com/it/u=2034015871,545031071&fm=193',
+                    nickname: 'User',
+                },
+                ui: {
+                    base: {
+                        icon: 'https://i.postimg.cc/VvHfrX4d/AI-LOGO.png',
+                        layout: 'pc',
+                        lang: 'zh-CN',
+                        zIndex: 1000
+                    },
+                    header: {
+                        isShow: true,
+                        isNeedClose: true,
+                    },
+                    asstBtn: {
+                        isNeed: true
+                    },
+                    footer: {
+                        isShow: true,
+                        expressionText: 'power by ZhangX',
+                    },
+                    conversations: {
+                        isNeed: true,
+                    },
+                    chatBot: {
+                        title: '信息集成部文件规范AI助手',
+                        uploadable: true,
+                        width: 1000,
+                        isNeedAddNewConversation: true,
+                        isNeedQuote: true,
+                        feedback: {
+                            feedbackPanel: {
+                                title: '您对这个回答有什么看法？请告诉我们',
+                                placeholder: '请详细描述您的问题...',
+                            },
+                        },
+                    },
+                },
+            });
+        });
+    </script>
+</body>
+</html>
